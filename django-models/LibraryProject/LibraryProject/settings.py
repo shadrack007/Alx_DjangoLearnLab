@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 3rd party apps
     'bookshelf.apps.BookshelfConfig',  # Ensure your app is included here
-    'relationship_app.app.RelationshipAppConfig'
+    'relationship_app.apps.RelationshipAppConfig'
 ]
 
 MIDDLEWARE = [
