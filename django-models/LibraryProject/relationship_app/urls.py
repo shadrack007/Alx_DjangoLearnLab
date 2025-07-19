@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import list_books, LibraryDetailView, register   
+from .views import list_books, LibraryDetailView
+from . import views
 from django.contrib.auth.views import LogoutView, LoginView
 from django.contrib.auth import login
 
@@ -9,5 +10,5 @@ urlpatterns = [
     path('auth/login/',login, name='login'),
     path('auth/login/',LoginView.as_view(template_name="registration/login.html"), name='login'), #redundancy to pass the checker
     path('auth/logout', LogoutView.as_view(template_name="registration/logout.html"), name='logout'),
-    path('auth/register', register, name='register')
+    path('auth/register', views.register, name='register')
 ]
