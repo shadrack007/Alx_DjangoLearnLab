@@ -1,4 +1,4 @@
-from .relationship_app.models import  Book, Librarian
+from .models import Book, Librarian
 
 # List all books in the library
 books = Book.objects.all()
