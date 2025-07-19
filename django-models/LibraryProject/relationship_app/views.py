@@ -5,6 +5,8 @@ from django.views.generic.detail import DetailView
 from django.contrib.auth.forms import UserCreationForm
 from .models import Book
 from .models import Library
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login as auth_login
 
 # Create your views here.
 def list_books(request):
@@ -31,3 +33,16 @@ def register(request):
         return render(request, 'registration/register.html', {
             'form': form
         })
+
+
+def login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            auth_login(request, user)
+            return redirect('list_books')
+        return render(request, 'registration/login.html', {'form': form})
+    else:
+        form = AuthenticationForm()
+        return render(request, 'registration/login.html', {'form': form})
