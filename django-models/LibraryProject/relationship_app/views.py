@@ -6,7 +6,9 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Book
 from .models import Library
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import User
 from django.contrib.auth import login as auth_login
+from django.contrib.auth.decorators import user_passes_test
 
 # Create your views here.
 def list_books(request):
@@ -46,3 +48,39 @@ def login(request):
     else:
         form = AuthenticationForm()
         return render(request, 'registration/login.html', {'form': form})
+    
+
+
+def is_admin(user):
+    user = User.objects.get(username=user)
+
+    if user.profile.role == 'Admin':
+        return True
+    return False
+
+def is_member(user):
+    user = User.objects.get(username=user)
+    if user.profile.role == 'Member':
+        return True
+    return False
+
+
+def is_librarian(user):
+    user = User.objects.get(username=user)
+    if user.profile.role == 'Librarian':
+        return True
+    return False
+
+    
+@user_passes_test(is_admin)
+def admin_view(request):
+    return render(request, 'relationship_app/admin_view.html')
+
+@user_passes_test(is_librarian)
+def librarian_view(request):
+    return render(request,'relationship_app/librarian_view.html')
+
+@user_passes_test(is_member)
+def member_view(request):
+    return render(request, 'relationship_app/member_view.html')
+
