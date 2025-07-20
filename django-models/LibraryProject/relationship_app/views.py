@@ -86,7 +86,7 @@ def add_book(request):
             'action': 'Add Book'
         })
 
-@permission_required('relationship_app.can_change_app')
+@permission_required('relationship_app.can_change_book')
 def change_book(request, book_id):
     book = get_object_or_404(Book, id=book_id)
 
