@@ -1,14 +1,15 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.views.generic.detail import DetailView
 from django.contrib.auth.forms import UserCreationForm
-from .models import Book
-from .models import Library
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import user_passes_test
+
+from .models import Book
+from .models import Library
+from .permission_test import is_admin, is_librarian, is_member
 
 # Create your views here.
 def list_books(request):
@@ -50,26 +51,6 @@ def login(request):
         return render(request, 'registration/login.html', {'form': form})
     
 
-
-def is_admin(user):
-    user = User.objects.get(username=user)
-
-    if user.profile.role == 'Admin':
-        return True
-    return False
-
-def is_member(user):
-    user = User.objects.get(username=user)
-    if user.profile.role == 'Member':
-        return True
-    return False
-
-
-def is_librarian(user):
-    user = User.objects.get(username=user)
-    if user.profile.role == 'Librarian':
-        return True
-    return False
 
     
 @user_passes_test(is_admin)
