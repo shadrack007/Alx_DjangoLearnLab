@@ -38,6 +38,14 @@ CONTENT_SECURITY_POLICY = {
     },
 }
 
+# Redirect all HTTP traffic to HTTPS
+SECURE_SSL_REDIRECT = True
+# Use secure hosts for cookies
+SECURE_HOSTS_SECONDS = True
+# Include subdomains in secure hosts
+SECURE_HOSTS_INCLUDE_SUBDOMAINS = True 
+SECURE_HOSTS_PRELOAD = True
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
