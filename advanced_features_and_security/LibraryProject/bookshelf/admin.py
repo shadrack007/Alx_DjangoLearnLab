@@ -8,3 +8,10 @@ class BookAdmin(admin.ModelAdmin):
     list_filter = ('publication_year','author')
 
 admin.site.register(Book)
+
+from  .models import CustomUser
+
+class CustomUserAdmin(admin.ModelAdmin):
+    list_display = ('username', 'email', 'profile_photo', 'date_of_birth')
+    
+admin.site.register(CustomUser, CustomUserAdmin)
