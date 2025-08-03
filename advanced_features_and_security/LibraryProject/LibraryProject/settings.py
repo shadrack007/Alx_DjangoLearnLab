@@ -42,6 +42,9 @@ CONTENT_SECURITY_POLICY = {
 SECURE_SSL_REDIRECT = True
 # Use secure hosts for cookies
 SECURE_HOSTS_SECONDS = True
+
+# Enables HTTP Strict Transport Security
+SECURE_HSTS_SECONDS = 31536000  # 1 year
 # Include subdomains in secure hosts
 SECURE_HOSTS_INCLUDE_SUBDOMAINS = True 
 SECURE_HOSTS_PRELOAD = True
