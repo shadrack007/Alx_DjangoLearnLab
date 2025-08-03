@@ -46,8 +46,8 @@ SECURE_HOSTS_SECONDS = True
 # Enables HTTP Strict Transport Security
 SECURE_HSTS_SECONDS = 31536000  # 1 year
 # Include subdomains in secure hosts
-SECURE_HOSTS_INCLUDE_SUBDOMAINS = True 
-SECURE_HOSTS_PRELOAD = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True 
+SECURE_HSTS_PRELOAD = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
