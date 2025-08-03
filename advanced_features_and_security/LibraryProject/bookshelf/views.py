@@ -10,7 +10,7 @@ def add_book(request):
     return HttpResponse("Book added successfully.")
 
 @permission_required('bookshelf.can_view_books', raise_exception=True)
-def view_books(request):
+def book_list(request):
     return HttpResponse("Here are the books.")
 
 @permission_required('bookshelf.can_edit_books', raise_exception=True)
