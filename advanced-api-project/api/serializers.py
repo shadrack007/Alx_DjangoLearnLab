@@ -7,7 +7,7 @@ class BookSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Book
-        fields = ['id','title','published_year']
+        fields = ['id','title','publication_year']
 
     # validate that the published year is not in the future
     def validate_published_year(self, value):
