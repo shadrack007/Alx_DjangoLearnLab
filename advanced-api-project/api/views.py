@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 from rest_framework import filters
 from django_filters import rest_framework
 
-from .models import Book
+from .models import Book, Author
 from .serializers import BookSerializer
 
 class ListView(generics.ListAPIView):
@@ -27,6 +27,12 @@ class CreateView(generics.CreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        author = Author.objects.create(name=self.request.user.username)
+    
+        serializer.save(author=author)
+
 
 class UpdateView(generics.UpdateAPIView):
     queryset = Book.objects.all()
