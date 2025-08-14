@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponse
 
 from .forms import CustomUserCreationForm
@@ -11,6 +12,12 @@ def home(request):
 
 def posts(request):
     return HttpResponse('posts pages')
+
+
+@login_required()
+def profile(request):
+    print(request.user)
+    return render(request, 'blog/profile.html')
 
 
 def register(request):
