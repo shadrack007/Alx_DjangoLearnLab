@@ -1,0 +1,23 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Register{% endblock %}
+{% block content %}
+<h2>Register</h2>
+
+{% if messages %}
+{% for message in messages %}
+<p
+        style="color: {% if message.tags == 'error' %}red{% else %}green{% endif %};"
+>
+    {{ message }}
+</p>
+{% endfor %}
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit">Register</button>
+</form>
+{% endblock %}
