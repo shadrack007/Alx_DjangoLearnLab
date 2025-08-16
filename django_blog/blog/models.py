@@ -26,5 +26,11 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
 
+    class Meta:
+        ordering = ['-created_at']
+
+    def get_absolute_url(self):
+        return reverse('post_details', kwargs = {"pk": self.post.id})
+
     def __str__(self):
         return self.content

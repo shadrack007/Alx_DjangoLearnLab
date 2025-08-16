@@ -6,8 +6,8 @@ from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 
-from .forms import CustomUserCreationForm, PostForm
-from .models import Post
+from .forms import CustomUserCreationForm, PostForm, CommentForm
+from .models import Post, Comment
 
 
 @login_required()
@@ -52,6 +52,24 @@ class PostListView(generic.ListView):
 class PostDetailView(LoginRequiredMixin, generic.DetailView):
     model = Post
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        #         pass the comment form
+        context['comment_form'] = CommentForm()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+
+        form = CommentForm(request.POST)
+
+        if form.is_valid():
+            comment = form.save(commit = False)
+            comment.author = request.user
+            comment.post = self.object
+            comment.save()
+        return redirect(self.object.get_absolute_url())
+
 
 class PostCreateView(LoginRequiredMixin, generic.CreateView):
     model = Post
@@ -88,3 +106,25 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView
         """Automatically called by UserPassesTest mixin"""
         post = self.get_object()
         return self.request.user == post.author  # Only author can delete
+
+
+class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'blog/comment_form.html'
+
+    def test_func(self):
+        comment = self.get_object()
+        return self.request.user == comment.author
+
+
+class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
+    model = Comment
+    template_name = 'blog/comment_confirm_delete.html'
+
+    def test_func(self):
+        comment = self.get_object()
+        return self.request.user == comment.author
+
+    def get_success_url(self):
+        return self.object.post.get_absolute_url()

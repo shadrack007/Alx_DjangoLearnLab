@@ -19,4 +19,35 @@
     </div>
     {% endif %}
 </div>
+
+<div>
+    <h2>Comments</h2>
+    <!--    list comments-->
+    {% for comment in post.comments.all %}
+    <p>{{comment.content}}</p>
+    <div>
+        By {{comment.author.username}} - {{comment.created_at|date:"M d, Y"}}
+    </div>
+    {% if user == comment.author %}
+    <a href="{% url 'comment_update' comment.pk %}">Edit</a>
+    <a href="{% url 'comment_delete' comment.pk %}">Delete</a>
+    {% endif %}
+    {% empty %}
+    <p>No Comments Yet</p>
+    {% endfor %}
+
+    <!--    comment form for logged in users-->
+    {% if user.is_authenticated %}
+    <h3>Add a Comment </h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ comment_form.as_p}}
+        <button type="submit">Post Comment</button>
+    </form>
+    {% else %}
+    <p>
+        <a href="{% url 'login' %}">Log in</a> to Comment
+    </p>
+    {% endif %}
+</div>
 {% endblock %}
