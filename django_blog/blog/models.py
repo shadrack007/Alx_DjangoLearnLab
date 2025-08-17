@@ -34,3 +34,10 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.content
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length = 50)
+
+    def __str__(self):
+        return self.name
