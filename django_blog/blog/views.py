@@ -115,7 +115,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView
         return self.request.user == post.author  # Only author can delete
 
 
-class PostsByTagListView(LoginRequiredMixin, generic.ListView):
+class PostByTagListView(LoginRequiredMixin, generic.ListView):
     model = Post
     template_name = 'blog/posts_by_tag.html'
     context_object_name = 'posts'
