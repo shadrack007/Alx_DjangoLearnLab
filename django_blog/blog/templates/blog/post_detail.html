@@ -9,7 +9,9 @@
     {% if object.tags.all %}
     <ul>
         {% for tag in object.tags.all %}
-        <li>{{ tag.name }}</li>
+        <li>
+            <a href="{% url 'posts_by_tag' tag_slug=tag.slug %}">{{ tag.name }} </a>
+        </li>
         {% endfor %}
     </ul>
     {% endif %}
