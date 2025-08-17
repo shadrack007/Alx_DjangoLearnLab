@@ -39,7 +39,7 @@
     <!--   link to comment form for logged in users-->
     {% if user.is_authenticated %}
     <div>
-        <a href="{% url 'comment_create' post_id=object.id %}">+Add Comment</a>
+        <a href="{% url 'comment_create' pk=object.id %}">+Add Comment</a>
     </div>
     {% else %}
     <p>

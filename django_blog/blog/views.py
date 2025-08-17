@@ -119,7 +119,7 @@ class CommentCreateView(LoginRequiredMixin, generic.CreateView):
 
     def form_valid(self, form):
         #         form.instance - unsaved Comment instance
-        post = get_object_or_404(Post, pk = self.kwargs['post_id'])
+        post = get_object_or_404(Post, pk = self.kwargs['pk'])
 
         form.instance.post = post
         form.instance.author = self.request.user
