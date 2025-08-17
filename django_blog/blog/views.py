@@ -52,24 +52,6 @@ class PostListView(generic.ListView):
 class PostDetailView(LoginRequiredMixin, generic.DetailView):
     model = Post
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        #         pass the comment form
-        context['comment_form'] = CommentForm()
-        return context
-
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-
-        form = CommentForm(request.POST)
-
-        if form.is_valid():
-            comment = form.save(commit = False)
-            comment.author = request.user
-            comment.post = self.object
-            comment.save()
-        return redirect(self.object.get_absolute_url())
-
 
 class PostCreateView(LoginRequiredMixin, generic.CreateView):
     model = Post
