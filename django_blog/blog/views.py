@@ -114,7 +114,8 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteV
 
 class CommentCreateView(LoginRequiredMixin, generic.CreateView):
     model = Comment
-    form_class = CommentForm()
+    form_class = CommentForm
+    template_name = 'blog/comment_form.html'
 
     def form_valid(self, form):
         #         form.instance - unsaved Comment instance

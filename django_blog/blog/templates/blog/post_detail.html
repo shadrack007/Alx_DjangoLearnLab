@@ -36,14 +36,11 @@
     <p>No Comments Yet</p>
     {% endfor %}
 
-    <!--    comment form for logged in users-->
+    <!--   link to comment form for logged in users-->
     {% if user.is_authenticated %}
-    <h3>Add a Comment </h3>
-    <form method="post">
-        {% csrf_token %}
-        {{ comment_form.as_p}}
-        <button type="submit">Post Comment</button>
-    </form>
+    <div>
+        <a href="{% url 'comment_create' post_id=object.id %}">+Add Comment</a>
+    </div>
     {% else %}
     <p>
         <a href="{% url 'login' %}">Log in</a> to Comment
