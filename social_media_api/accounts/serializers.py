@@ -35,25 +35,10 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 class SimpleProfileSerializer(serializers.ModelSerializer):
     following_count = serializers.SerializerMethodField(read_only = True)
-    followers_count = serializers.SerializerMethodField(read_only = True)
 
     class Meta:
         model = User
-        fields = ['id', 'email', 'username', 'bio', 'profile_picture', 'following_count', 'followers_count']
+        fields = ['id', 'email', 'username', 'bio', 'profile_picture', 'following_count']
 
     def get_following_count(self, obj):
         return obj.following.count()
-
-    def get_followers_count(self, obj):
-        return obj.followers.count()
-
-
-"""Detailed user profile with the user followers/following profiles"""
-
-
-class ComplexProfileSerializer(serializers.ModelSerializer):
-    followers = SimpleProfileSerializer(many = True, read_only = True)
-    following = SimpleProfileSerializer(many = True, read_only = True)
-
-    class Meta:
-        fields = ['id', 'username', 'email', 'bio', 'profile_picture', 'followers', 'following']
