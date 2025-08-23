@@ -13,14 +13,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         model = User
         fields = ['username', 'email', 'password']
 
-    def create(self, validated_data):
-        user = User.objects.create_user(
-            username = validated_data.get('username'),
-            email = validated_data.get('email'),
-            password = validated_data.get('password')
-        )
-        return user
-
     def validate_password(self, password):
         try:
             validate_password(password)
@@ -28,6 +20,14 @@ class RegisterSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(error.messages)
 
         return password
+
+    def create(self, validated_data):
+        user = get_user_model().objects.create_user(
+            username = validated_data.get('username'),
+            email = validated_data.get('email'),
+            password = validated_data.get('password')
+        )
+        return user
 
 
 """Simple User profile"""
