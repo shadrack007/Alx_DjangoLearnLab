@@ -3,6 +3,7 @@ from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView, get_ob
 from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import generics
 from rest_framework import status
 
 from .serializers import RegisterSerializer, SimpleProfileSerializer
@@ -24,7 +25,7 @@ class UserProfileView(RetrieveUpdateAPIView):
         return self.request.user
 
 
-class FollowUserView(APIView):
+class FollowUserView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, user_id):
