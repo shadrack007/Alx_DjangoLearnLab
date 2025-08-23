@@ -29,6 +29,8 @@ INSTALLED_APPS = [
     #     local
     'accounts.apps.AccountsConfig',
     'posts.apps.PostsConfig',
+    'notifications.apps.NotificationsConfig',
+
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
