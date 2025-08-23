@@ -50,14 +50,14 @@ class PostLikeView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, pk):
-        post = get_object_or_404(Post, pk = pk)
+        post = generics.get_object_or_404(Post, pk = pk)
         user = request.user
 
         #     handle duplicate like
         if Like.objects.filter(user = user, post = post).exists():
             return Response({"error": "You already liked this post."}, status = status.HTTP_400_BAD_REQUEST)
         else:
-            Like.objects.create(user = user, post = post)
+            Like.objects.get_or_create(user = user, post = post)
             # generate like notification
             if post.author != user:  # prevent self notification
                 Notification.objects.create(
