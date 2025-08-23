@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
 from .permissions import IsOwnerOrReadOnly
@@ -25,3 +26,15 @@ class CommentViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         # Automatically set the logged in user as the authro
         serializer.save(author = self.request.user)
+
+
+class FeedView(ListAPIView):
+    serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+
+        # get all users the current user follows
+        following_users = user.following.all()
+        return Post.objects.filter(author__in = following_users).order_by('-created_at')
